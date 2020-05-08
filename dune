@@ -1,0 +1,13 @@
+(library
+ (name five)
+ (modules five)
+ (preprocess
+  (pps ppx_jane))
+ (libraries base ctypes ctypes.foreign))
+
+(executable
+ (name five_bin)
+ (modules five_bin)
+ (libraries five)
+ (preprocess
+  (pps ppx_jane)))
