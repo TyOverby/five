@@ -1,4 +1,3 @@
-open! Base
 open! Ctypes
 module Foreign = Foreign
 

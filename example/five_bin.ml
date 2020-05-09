@@ -1,12 +1,12 @@
-open Five
+open Five_sys
 
 let x = Tree.x ()
 let y = Tree.y ()
-let x2 = Tree.op_unary (Five.Tree.opcode "square") x
-let y2 = Tree.op_unary (Five.Tree.opcode "square") y
-let s = Tree.op_binary (Five.Tree.opcode "add") x2 y2
+let x2 = Tree.op_unary (Tree.opcode "square") x
+let y2 = Tree.op_unary (Tree.opcode "square") y
+let s = Tree.op_binary (Tree.opcode "add") x2 y2
 let one = Tree.const 1.0
-let final = Tree.op_binary (Five.Tree.opcode "sub") s one
+let final = Tree.op_binary (Tree.opcode "sub") s one
 
 let () =
   save_slice
@@ -19,7 +19,7 @@ let () =
          ~max_y:2.0)
     ~z:0.0
     ~resolution:10.0
-    ~filename:"circle.svg"
+    ~filename:"out/circle.svg"
 ;;
 
 let () =
@@ -34,5 +34,5 @@ let () =
          ~min_z:(-2.0)
          ~max_z:2.0)
     ~resolution:10.0
-    ~filename:"circle.stl"
+    ~filename:"out/circle.stl"
 ;;

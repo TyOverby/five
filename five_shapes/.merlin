@@ -1,6 +1,5 @@
 EXCLUDE_QUERY_DIR
 B /home/tyoverby/workspace/c/libfive/build/mybindings/_opam/lib/ocaml
-B /home/tyoverby/workspace/c/libfive/build/mybindings/_opam/lib/ocaml/threads
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/base
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/base/base_internalhash_types
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/base/caml
@@ -9,10 +8,7 @@ B /home/tyoverby/workspace/ocaml/five/_opam/lib/base/shadow_stdlib
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/base_quickcheck
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/bin_prot
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/bin_prot/shape
-B /home/tyoverby/workspace/ocaml/five/_opam/lib/bytes
-B /home/tyoverby/workspace/ocaml/five/_opam/lib/ctypes
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/fieldslib
-B /home/tyoverby/workspace/ocaml/five/_opam/lib/integers
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/jane-street-headers
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_assert/runtime-lib
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_bench/runtime-lib
@@ -33,10 +29,9 @@ B /home/tyoverby/workspace/ocaml/five/_opam/lib/stdio
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/time_now
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/typerep
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/variantslib
-B _build/default/.five.objs/byte
-B _build/default/.five_bin.eobjs/byte
+B ../_build/default/five_expr/.five_expr.objs/byte
+B ../_build/default/five_shapes/.five.objs/byte
 S /home/tyoverby/workspace/c/libfive/build/mybindings/_opam/lib/ocaml
-S /home/tyoverby/workspace/c/libfive/build/mybindings/_opam/lib/ocaml/threads
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/base
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/base/base_internalhash_types
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/base/caml
@@ -45,10 +40,7 @@ S /home/tyoverby/workspace/ocaml/five/_opam/lib/base/shadow_stdlib
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/base_quickcheck
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/bin_prot
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/bin_prot/shape
-S /home/tyoverby/workspace/ocaml/five/_opam/lib/bytes
-S /home/tyoverby/workspace/ocaml/five/_opam/lib/ctypes
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/fieldslib
-S /home/tyoverby/workspace/ocaml/five/_opam/lib/integers
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/jane-street-headers
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_assert/runtime-lib
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_bench/runtime-lib
@@ -69,6 +61,7 @@ S /home/tyoverby/workspace/ocaml/five/_opam/lib/stdio
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/time_now
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/typerep
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/variantslib
+S ../five_expr
 S .
 FLG -ppx '/home/tyoverby/workspace/ocaml/five/_build/default/.ppx/57ef275c515ec1fe105f6ff0979f5a61/ppx.exe --as-ppx --cookie '\''library-name="five"'\'''
-FLG -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs
+FLG -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs
