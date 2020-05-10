@@ -1,4 +1,5 @@
 (executable
  (name five_bin)
- (libraries five_sys)
- (preprocess (pps ppx_jane)))
+ (libraries five_sys five)
+ (preprocess
+  (pps ppx_jane)))

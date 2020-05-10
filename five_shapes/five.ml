@@ -60,14 +60,14 @@ module Csg = struct
     match shapes with
     | [] -> failwith "intersection with zero arguments!"
     | [ a ] -> a ~x ~y ~z
-    | a :: rest -> min (a ~x ~y ~z) (intersection rest ~x ~y ~z)
+    | a :: rest -> max (a ~x ~y ~z) (intersection rest ~x ~y ~z)
   ;;
 
   let inverse shape ~x ~y ~z = neg (shape ~x ~y ~z)
 
   let difference a = function
     | [] -> a
-    | l -> intersection [ a; union l ]
+    | l -> intersection [ a; inverse (union l) ]
   ;;
 
   let offset shape ~by ~x ~y ~z = shape ~x ~y ~z - by
@@ -94,7 +94,7 @@ module Csg = struct
 
   let real_offset = offset
 
-  let blend_difference a b ?(offset = const 0.0) ~amount =
+  let blend_difference ?(offset = const 0.0) a b ~amount =
     inverse
       (blend_expt_unit (inverse a) (real_offset b ~by:offset) ~amount)
   ;;

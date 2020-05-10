@@ -1,5 +1,3 @@
-open! Base
-
 type t =
   | Global_x
   | Global_y

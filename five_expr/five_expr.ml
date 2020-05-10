@@ -1,5 +1,3 @@
-open! Base
-
 type t =
   | Global_x
   | Global_y
@@ -77,5 +75,5 @@ let of_string s =
       failwith "Opcode for binary operator expected, found EOF!"
     | s :: _, _ -> failwith (Printf.sprintf "unexpected token %s" s)
   in
-  loop (String.split s ~on:' ') []
+  loop (String.split_on_char ' ' s) []
 ;;

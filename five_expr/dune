@@ -1,5 +1,4 @@
 (library
  (name five_expr)
  (preprocess
-  (pps ppx_jane))
- (libraries base))
+  (pps ppx_jane)))

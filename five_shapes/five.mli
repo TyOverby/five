@@ -69,9 +69,9 @@ module Csg : sig
   val morph : t -> t -> by:Value.t -> t
 
   val blend_difference
-    :  t
+    :  ?offset:Value.t
     -> t
-    -> ?offset:Value.t
+    -> t
     -> amount:Value.t
     -> t
 end

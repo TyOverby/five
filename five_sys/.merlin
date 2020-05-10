@@ -33,6 +33,7 @@ B /home/tyoverby/workspace/ocaml/five/_opam/lib/stdio
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/time_now
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/typerep
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/variantslib
+B ../_build/default/five_expr/.five_expr.objs/byte
 B ../_build/default/five_sys/.five_sys.objs/byte
 S /home/tyoverby/workspace/c/libfive/build/mybindings/_opam/lib/ocaml
 S /home/tyoverby/workspace/c/libfive/build/mybindings/_opam/lib/ocaml/threads
@@ -68,6 +69,7 @@ S /home/tyoverby/workspace/ocaml/five/_opam/lib/stdio
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/time_now
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/typerep
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/variantslib
+S ../five_expr
 S .
 FLG -ppx '/home/tyoverby/workspace/ocaml/five/_build/default/.ppx/57ef275c515ec1fe105f6ff0979f5a61/ppx.exe --as-ppx --cookie '\''library-name="five_sys"'\'''
-FLG -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs
+FLG -open Five_sys__ -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs

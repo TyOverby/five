@@ -1,12 +1,44 @@
+open struct
+  include Five.Dim3
+  include Five.Csg
+  include Five.Transform
+  include Five.Value
+
+  let c = Five.Value.const
+end
+
+(*
+let final =
+  blend_difference
+    ~amount:(c 1.0)
+    (sphere ~r:(c 1.0))
+    (sphere ~r:(c 1.0) |> move ~dx:(c 1.0))
+
+    *)
+
+let final =
+  intersection
+    [ sphere ~r:(c 2.0)
+    ; (fun ~x ~y ~z ->
+        let x = x * c 5.0 in
+        let y = y * c 5.0 in
+        let z = z * c 5.0 in
+        sin x + sin y + sin z)
+    ]
+;;
+
+let expr =
+  final
+    ~x:Five.Value.Global_x
+    ~y:Five.Value.Global_y
+    ~z:Five.Value.Global_z
+;;
+
+let () = print_endline (Five_expr.to_string expr)
+
 open Five_sys
 
-let x = Tree.x ()
-let y = Tree.y ()
-let x2 = Tree.op_unary (Tree.opcode "square") x
-let y2 = Tree.op_unary (Tree.opcode "square") y
-let s = Tree.op_binary (Tree.opcode "add") x2 y2
-let one = Tree.const 1.0
-let final = Tree.op_binary (Tree.opcode "sub") s one
+let final = conv expr
 
 let () =
   save_slice
@@ -27,12 +59,12 @@ let () =
     ~tree:final
     ~region:
       (Region3.create
-         ~min_x:(-2.0)
-         ~max_x:2.0
-         ~min_y:(-2.0)
-         ~max_y:2.0
-         ~min_z:(-2.0)
-         ~max_z:2.0)
-    ~resolution:10.0
+         ~min_x:(-3.0)
+         ~max_x:3.0
+         ~min_y:(-3.0)
+         ~max_y:3.0
+         ~min_z:(-3.0)
+         ~max_z:3.0)
+    ~resolution:20.0
     ~filename:"out/circle.stl"
 ;;
