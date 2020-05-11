@@ -123,6 +123,19 @@ module Dim3 : sig
     -> max_y:Value.t
     -> max_z:Value.t
     -> t
+
+  val rounded_box
+    :  r:Five_expr.t
+    -> min_x:Five_expr.t
+    -> min_y:Five_expr.t
+    -> min_z:Five_expr.t
+    -> max_x:Five_expr.t
+    -> max_y:Five_expr.t
+    -> max_z:Five_expr.t
+    -> x:Five_expr.t
+    -> y:Five_expr.t
+    -> z:Five_expr.t
+    -> Five_expr.t
 end
 
 val extrude_z : t -> min_z:Value.t -> max_z:Value.t -> t

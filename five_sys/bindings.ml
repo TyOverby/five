@@ -1,5 +1,19 @@
 open! Ctypes
 
+let () =
+  let os_name =
+    let ic = Unix.open_process_in "uname" in
+    let uname = input_line ic in
+    let () = close_in ic in
+    uname
+  in
+  ignore
+    (match os_name with
+     | "Darwin" -> Dl.dlopen ~filename:"libfive.dylib" ~flags:[]
+     | _ -> Dl.dlopen ~filename:"libfive.so" ~flags:[]
+      : _)
+;;
+
 module Interval = struct
   type s
 
