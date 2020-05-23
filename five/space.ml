@@ -97,6 +97,14 @@ let interpolate
     on
 ;;
 
+include Base.Monad.Make (struct
+  type nonrec 'a t = 'a t
+
+  let map = `Custom map
+  let bind = bind
+  let return = return
+end)
+
 let ( let+ ) a f = map a ~f
 let ( let* ) a f = bind a ~f
 let ( and+ ) a b = both a b
