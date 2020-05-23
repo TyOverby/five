@@ -50,8 +50,9 @@ html, body {
 
     var loader = new STLLoader();
     var mesh = null
+    var filename = "./_build/default/example/out.stl"
     function load() {
-      loader.load( './out/circle.stl', function (bufferGeometry) {
+      loader.load(filename, function (bufferGeometry) {
         if (mesh !== null) {
 	  scene.remove(mesh)
 	}
@@ -78,7 +79,7 @@ html, body {
     return new Promise(function(resolve){setTimeout(resolve, millis)});
   }
   async function check_modified() {
-    var response = await fetch("./out/circle.stl", {method: 'HEAD'});
+    var response = await fetch(filename, {method: 'HEAD'});
     var date = Date.parse(response.headers.get('last-modified')); 
     if (last_modified_date !== date) {
       last_modified_date = date; 

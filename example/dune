@@ -3,3 +3,8 @@
  (libraries five_sys five)
  (preprocess
   (pps ppx_jane)))
+
+(rule
+ (targets out.stl)
+ (action
+  (run "./five_bin.exe")))

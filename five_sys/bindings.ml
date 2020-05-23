@@ -7,12 +7,13 @@ let () =
     let () = close_in ic in
     uname
   in
-  ignore
-    (match os_name with
-     | "Darwin" -> Dl.dlopen ~filename:"libfive.dylib" ~flags:[]
-     | _ -> Dl.dlopen ~filename:"libfive.so" ~flags:[]
-      : _)
+  match os_name with
+  | "Darwin" ->
+    ignore (Dl.dlopen ~filename:"libfive.dylib" ~flags:[] : _)
+  | _ -> ()
 ;;
+
+(*Dl.dlopen ~filename:"libfive.so" ~flags:[]*)
 
 module Interval = struct
   type s
