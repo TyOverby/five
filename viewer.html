@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<title>STL Viewer</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="main.css">
+    </head>
+    <style>
+html, body {
+    margin:0;
+    padding:0;
+}
+    </style>
+    <body>
+	<script type="module">
+	    import * as THREE from 'https://threejs.org/build/three.module.js';
+   import { STLLoader } from 'https://threejs.org/examples/jsm/loaders/STLLoader.js';
+   import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
+
+   var container;
+
+   var camera, cameraTarget, scene, renderer;
+     var controls;
+     var frustumSize = 600;
+
+   init();
+   animate();
+
+   function init() {
+  var aspect = window.innerWidth / window.innerHeight;
+
+    container = document.createElement( 'div' );
+    document.body.appendChild( container );
+
+    camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 0.01, 2000 );
+  try{
+  //camera = new THREE.OrthographicCamera( 0.5 * frustumSize * aspect / - 2, 0.5 * frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 0, 1000 );
+  } catch (e) {
+  alert (e);
+  }
+    camera.position.set( 2, 2, 2 );
+
+    cameraTarget = new THREE.Vector3( 0, 0, 0 );
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color( 0x72645b );
+    scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
+
+
+    var loader = new STLLoader();
+    var mesh = null
+    function load() {
+      loader.load( './out/circle.stl', function (bufferGeometry) {
+        if (mesh !== null) {
+	  scene.remove(mesh)
+	}
+
+	var geometry = new THREE.Geometry();
+	geometry.fromBufferGeometry(bufferGeometry);
+	geometry.normalize(); 
+	geometry.computeFaceNormals();
+	geometry.computeFlatVertexNormals();
+       var material = new THREE.MeshPhongMaterial( { color: 0xff5533, flatShading: true } );
+	var material = new THREE.MeshNormalMaterial({ flatShading : false});
+
+       mesh = new THREE.Mesh( geometry, material );
+
+       mesh.position.set( 0, 0, 0 );
+       mesh.rotation.set( 0, 0, 0 );
+       mesh.scale.set( 0.5, 0.5, 0.5 );
+       scene.add( mesh );
+      });
+    }
+  
+  var last_modified_date = 0;
+  function sleep(millis) {
+    return new Promise(function(resolve){setTimeout(resolve, millis)});
+  }
+  async function check_modified() {
+    var response = await fetch("./out/circle.stl", {method: 'HEAD'});
+    var date = Date.parse(response.headers.get('last-modified')); 
+    if (last_modified_date !== date) {
+      last_modified_date = date; 
+      load();
+    } 
+    await sleep(100);
+    check_modified();
+  }
+  check_modified();
+
+    // Lights
+
+
+  var light = new THREE.DirectionalLight( 0xffffff );
+    light.position.set( 1, 1, 1 );
+    scene.add( light );
+
+    var light = new THREE.DirectionalLight( 0x002288 );
+    light.position.set( - 1, - 1, - 1 );
+    scene.add( light );
+
+    var light = new THREE.AmbientLight( 0x222222 );
+    scene.add( light );
+
+
+
+    // renderer
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.outputEncoding = THREE.sRGBEncoding;
+
+    container.appendChild( renderer.domElement );
+
+  controls = new OrbitControls(camera, renderer.domElement);
+
+  controls.screenSpacePanning = true;
+  controls.minPolarAngle = 0.01;
+  controls.maxPolarAngle = Math.PI - 0.01;
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+
+
+    //
+
+    window.addEventListener( 'resize', onWindowResize, false );
+
+   }
+
+   function onWindowResize() {
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+   }
+
+   function animate() {
+    requestAnimationFrame( animate );
+  controls.update();
+    render();
+   }
+
+   function render() {
+    camera.lookAt( cameraTarget );
+    renderer.render( scene, camera );
+   }
+	</script>
+    </body>
+</html>
