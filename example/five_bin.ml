@@ -11,25 +11,21 @@ let wand =
   let open Five.Space in
   let height = 15.0 in
   let handle = 4.0 in
-  let _thickness = 0.5 in
+  let thick_2 = 0.25 in
   let* z = z in
-  let narrow_down ~x ~y ~z =
-    let scale =
-      interpolate ~domain:(handle, height) ~range:(1.0, 0.35) z
-    in
-    x / scale, y / scale, z
+  let scale =
+    interpolate ~domain:(handle, height) ~range:(1.0, 0.35) z
   in
-  let* () = warp_space narrow_down in
-  let* () =
-    let rad =
-      interpolate
-        ~using:(fun a -> a * a)
-        ~domain:(handle, height)
-        ~range:(Float.pi *. 2.5, 0.0)
-        z
-    in
-    warp_space (Five.Transform.rotate_z ~rad)
+  let rad =
+    interpolate
+      ~using:(fun a -> a * a)
+      ~domain:(handle, height)
+      ~range:(Float.pi *. 2.5, 0.0)
+      z
   in
+  let* () = warp_space (Five.Transform.scale_x scale) in
+  let* () = warp_space (Five.Transform.scale_y scale) in
+  let* () = warp_space (Five.Transform.rotate_z ~rad) in
   let roundness =
     interpolate
       ~using:(fun a -> a * a * a)
@@ -40,11 +36,11 @@ let wand =
   shape
     (rounded_box
        ~r:roundness
-       ~min_x:(c (-0.25))
-       ~min_y:(c (-0.25))
+       ~min_x:(c (-.thick_2))
+       ~min_y:(c (-.thick_2))
        ~min_z:(c 0.0)
-       ~max_x:(c 0.25)
-       ~max_y:(c 0.25)
+       ~max_x:(c thick_2)
+       ~max_y:(c thick_2)
        ~max_z:(c height))
 ;;
 
@@ -112,6 +108,6 @@ let () =
          ~max_y:2.0
          ~min_z:(-2.0)
          ~max_z:17.0)
-    ~resolution:105.0
+    ~resolution:55.0
     ~filename:"out.stl"
 ;;
