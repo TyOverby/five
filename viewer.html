@@ -33,19 +33,13 @@ html, body {
     container = document.createElement( 'div' );
     document.body.appendChild( container );
 
-    camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 0.01, 2000 );
-  try{
-  //camera = new THREE.OrthographicCamera( 0.5 * frustumSize * aspect / - 2, 0.5 * frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 0, 1000 );
-  } catch (e) {
-  alert (e);
-  }
+    camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 0.00001, 2000 );
     camera.position.set( 2, 2, 2 );
 
     cameraTarget = new THREE.Vector3( 0, 0, 0 );
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0x72645b );
-    scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
+    scene.background = new THREE.Color(0x292222);
 
 
     var loader = new STLLoader();
@@ -62,8 +56,8 @@ html, body {
 	geometry.normalize(); 
 	geometry.computeFaceNormals();
 	geometry.computeFlatVertexNormals();
-       var material = new THREE.MeshPhongMaterial( { color: 0xff5533, flatShading: true } );
-	var material = new THREE.MeshNormalMaterial({ flatShading : false});
+        var material = new THREE.MeshPhongMaterial( { color: 0xff5533, flatShading: true } );
+	var material = new THREE.MeshNormalMaterial({ flatShading : true});
 
        mesh = new THREE.Mesh( geometry, material );
 
