@@ -1,4 +1,3 @@
-open! Base
 module Value = Value
 module Csg = Csg
 module Transform = Transform

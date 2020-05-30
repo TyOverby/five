@@ -1,4 +1,3 @@
-open! Base
 open! Import
 
 type 'a t

@@ -1,5 +1,3 @@
 (library
  (name five_sys)
- (preprocess
-  (pps ppx_jane))
  (libraries five_expr ctypes ctypes.foreign))

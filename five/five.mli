@@ -1,4 +1,3 @@
-open! Base
 open! Import
 module Value = Value
 module Csg = Csg

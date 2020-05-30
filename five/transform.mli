@@ -1,4 +1,3 @@
-open! Base
 open! Import
 
 type t = x:v -> y:v -> z:v -> v * v * v

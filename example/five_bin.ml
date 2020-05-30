@@ -72,8 +72,7 @@ let final =
     (let open Five.Space in
     let* wand = isolated wand in
     let* box = isolated box in
-
-    return (Five.Csg.difference box [wand]))
+    return (Five.Csg.difference box [wand])) 
 ;;
 
 
@@ -81,20 +80,6 @@ let final =
   let expr = Five.Value.Private.to_expr final in
   print_endline (Five_expr.to_string expr);
   Five_sys.conv expr
-;;
-
-let () =
-  Five_sys.save_slice
-    ~tree:final
-    ~region:
-      (Five_sys.Region2.create
-         ~min_x:(-2.0)
-         ~max_x:2.0
-         ~min_y:(-2.0)
-         ~max_y:2.0)
-    ~z:0.0
-    ~resolution:10.0
-    ~filename:"out.svg"
 ;;
 
 let () =

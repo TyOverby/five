@@ -1,4 +1,3 @@
-open! Base
 include Five_expr
 
 let const v = Const v
@@ -37,10 +36,10 @@ let rec ( ^ ) v i =
   | 0 -> const 1.0
   | 1 -> v
   | 2 -> square v
-  | n -> v * (v ^ Int.(n - 1))
+  | n -> v * (v ^ (Int.sub n 1))
 ;;
 
 module Private = struct
-  let to_expr = Fn.id
-  let of_expr = Fn.id
+  let to_expr a = a
+  let of_expr a = a
 end

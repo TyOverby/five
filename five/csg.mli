@@ -1,4 +1,3 @@
-open! Base
 open! Import
 
 val union : v list -> v

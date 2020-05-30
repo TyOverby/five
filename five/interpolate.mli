@@ -1,4 +1,3 @@
-open! Base
 open! Import
 
 val clamp : low:v -> high:v -> v -> v
