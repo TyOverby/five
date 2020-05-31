@@ -14,8 +14,9 @@ module Gen = struct
     | Sin of t [@quickcheck.weight 3.0]
     | Cos of t [@quickcheck.weight 3.0]
     | Tan of t [@quickcheck.weight 0.0]
-    | Sqrt of t [@quickcheck.weight 3.0]
+    | Sqrt of t [@quickcheck.weight 2.0]
     | Square of t [@quickcheck.weight 3.0]
+    | Shell of t [@quickcheck.weight 0.0]
   [@@deriving quickcheck, sexp]
 
   let rec t_to_shape =
@@ -30,11 +31,12 @@ module Gen = struct
     | Div (a, b) -> div (t_to_shape a) (t_to_shape b)
     | Min (a, b) -> min (t_to_shape a) (t_to_shape b)
     | Max (a, b) -> max (t_to_shape a) (t_to_shape b)
-    | Sin t -> sin (t_to_shape t)
-    | Cos t -> cos (t_to_shape t)
-    | Tan t -> cos (t_to_shape t)
+    | Sin t -> (sin (t_to_shape t)) 
+    | Cos t -> (cos (t_to_shape t)) 
+    | Tan t -> (t_to_shape t)
     | Sqrt t -> sqrt (abs (t_to_shape t))
     | Square t -> square (t_to_shape t)
+    | Shell t -> (max (t_to_shape t) (sub(t_to_shape t) (const 1.0)))
   ;;
 
   let rec pred ~f x =
@@ -48,25 +50,56 @@ module Gen = struct
     | Div (a, b)
     | Min (a, b)
     | Max (a, b) -> pred ~f a || pred ~f b
-    | Sin t | Cos t | Tan t | Sqrt t | Square t -> pred ~f t
+    | Shell t | Sin t | Cos t | Tan t | Sqrt t | Square t -> pred ~f t
+  ;;
+
+  let rec depth = function
+    | X | Y | Z -> 1
+    | Add (a, b)
+    | Sub (a, b)
+    | Mul (a, b)
+    | Div (a, b)
+    | Min (a, b)
+    | Max (a, b) -> Int.max (depth a) (depth b)
+    | Shell t | Sin t | Cos t | Tan t | Sqrt t | Square t -> 1 + depth t
+  ;;
+
+  let rec size = function
+    | X | Y | Z -> 1
+    | Add (a, b)
+    | Sub (a, b)
+    | Mul (a, b)
+    | Div (a, b)
+    | Min (a, b)
+    | Max (a, b) -> size a + size b
+    | Shell t | Sin t | Cos t | Tan t | Sqrt t | Square t -> 1 + size t
   ;;
 
   let is_interesting a =
-    pred
-      ~f:(function
-        | X -> true
-        | _ -> false)
-      a
-    && pred
-         ~f:(function
-           | Y -> true
-           | _ -> false)
-         a
-    && pred
-         ~f:(function
-           | Z -> true
-           | _ -> false)
-         a
+    let var_count =
+      let has_x =
+        pred a ~f:(function
+            | X -> true
+            | _ -> false)
+      in
+      let has_y =
+        pred a ~f:(function
+            | Y -> true
+            | _ -> false)
+      in
+      let has_z =
+        pred a ~f:(function
+            | Z -> true
+            | _ -> false)
+      in
+      Bool.(to_int has_x + to_int has_y + to_int has_z) > 1
+    in
+    let has_trig =
+      pred a ~f:(function
+          | Sin _ | Cos _ | Tan _ -> true
+          | _ -> false)
+    in
+    var_count && (has_trig)
   ;;
 end
 
@@ -84,8 +117,15 @@ let () =
   let l = ref [] in
   Quickcheck.iter Gen.quickcheck_generator ~trials:1000 ~f:(fun x ->
       if Gen.is_interesting x then l := x :: !l);
-  let x = List.nth_exn !l 118 in
-  print_s [%message (x : Gen.t)];
+  let l =
+    !l
+    |> List.filter ~f:Gen.is_interesting
+    |> List.filter ~f:(fun a -> Gen.size a > 5)
+    |> List.sort ~compare:(fun a b -> Gen.size a - Gen.size b)
+  in
+  print_s [%message (List.length l: int)];
+  let x = List.nth_exn l 60 in
+  print_s (Gen.sexp_of_t x);
   let shape = make_shape (Gen.t_to_shape x) in
   Five_sys.save_mesh
     ~tree:(Five_sys.conv (Five.Value.Private.to_expr shape))
