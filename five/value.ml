@@ -36,7 +36,7 @@ let rec ( ^ ) v i =
   | 0 -> const 1.0
   | 1 -> v
   | 2 -> square v
-  | n -> v * (v ^ (Int.sub n 1))
+  | n -> v * (v ^ Int.sub n 1)
 ;;
 
 module Private = struct

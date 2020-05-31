@@ -1,5 +1,4 @@
 EXCLUDE_QUERY_DIR
-B /home/tyoverby/workspace/c/libfive/build/mybindings/_opam/lib/ocaml
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/base
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/base/base_internalhash_types
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/base/caml
@@ -10,6 +9,7 @@ B /home/tyoverby/workspace/ocaml/five/_opam/lib/bin_prot
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/bin_prot/shape
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/fieldslib
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/jane-street-headers
+B /home/tyoverby/workspace/ocaml/five/_opam/lib/ocaml
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_assert/runtime-lib
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_bench/runtime-lib
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_compare/runtime-lib
@@ -30,7 +30,6 @@ B /home/tyoverby/workspace/ocaml/five/_opam/lib/time_now
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/typerep
 B /home/tyoverby/workspace/ocaml/five/_opam/lib/variantslib
 B ../_build/default/five_expr/.five_expr.objs/byte
-S /home/tyoverby/workspace/c/libfive/build/mybindings/_opam/lib/ocaml
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/base
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/base/base_internalhash_types
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/base/caml
@@ -41,6 +40,7 @@ S /home/tyoverby/workspace/ocaml/five/_opam/lib/bin_prot
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/bin_prot/shape
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/fieldslib
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/jane-street-headers
+S /home/tyoverby/workspace/ocaml/five/_opam/lib/ocaml
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_assert/runtime-lib
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_bench/runtime-lib
 S /home/tyoverby/workspace/ocaml/five/_opam/lib/ppx_compare/runtime-lib

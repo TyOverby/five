@@ -18,7 +18,7 @@ let wand =
   in
   let rad =
     interpolate
-      ~using:(Five.Interpolate.ease_in_quad)
+      ~using:Five.Interpolate.ease_in_quad
       ~domain:(handle, height)
       ~range:(Float.pi *. 2.5, 0.0)
       z
@@ -72,9 +72,8 @@ let final =
     (let open Five.Space in
     let* wand = isolated wand in
     let* box = isolated box in
-    return (Five.Csg.difference box [wand])) 
+    return (Five.Csg.difference box [ wand ]))
 ;;
-
 
 let final =
   let expr = Five.Value.Private.to_expr final in

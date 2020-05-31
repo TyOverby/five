@@ -1,0 +1,10 @@
+(executable
+ (name shapegen)
+ (libraries core_kernel five_sys five)
+ (preprocess
+  (pps ppx_jane)))
+
+(rule
+ (targets out.stl)
+ (action
+  (run "./shapegen.exe")))
