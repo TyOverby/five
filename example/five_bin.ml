@@ -13,15 +13,15 @@ let wand =
   let handle = 4.0 in
   let thick_2 = 0.25 in
   let* z = z in
-  let scale =
-    interpolate ~domain:(handle, height) ~range:(1.0, 0.35) z
-  in
   let rad =
     interpolate
       ~using:Five.Interpolate.ease_in_quad
       ~domain:(handle, height)
       ~range:(Float.pi *. 2.5, 0.0)
       z
+  in
+  let scale =
+    interpolate ~domain:(handle, height) ~range:(1.0, 0.35) z
   in
   let* () = warp_space (Five.Transform.scale_x scale) in
   let* () = warp_space (Five.Transform.scale_y scale) in

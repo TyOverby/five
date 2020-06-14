@@ -1,7 +1,9 @@
+(** This type represents a number.  It is abstract because 
+    libfive operates on arithmatic expression trees, so this type is
+    actually just a tree that encodes all of the operations that 
+    have been performed. *)
 type t
 
-val to_string : t -> string
-val of_string : string -> t
 val const : float -> t
 val square : t -> t
 val sqrt : t -> t
@@ -31,6 +33,8 @@ val ( - ) : t -> t -> t
 val ( * ) : t -> t -> t
 val ( / ) : t -> t -> t
 val ( ^ ) : t -> int -> t
+val to_string : t -> string
+val of_string : string -> t
 
 module Private : sig
   val to_expr : t -> Five_expr.t

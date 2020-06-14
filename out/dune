@@ -1,3 +1,0 @@
-(rule
-  (targets circle.stl)
-  (action (run "../example/five_bin.exe")))
