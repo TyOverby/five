@@ -33,9 +33,19 @@ let reflect_z ?(pos = const 0.0) () ~x ~y ~z =
 let reflect_xy ~x ~y ~z = shape ~x:y ~y:x ~z
 let reflect_yz ~x ~y ~z = shape ~x ~y:z ~z:y
 let reflect_xz ~x ~y ~z = shape ~x:z ~y ~z:x
-let sym_x ~x ~y ~z = shape ~x:(abs x) ~y ~z
-let sym_y ~x ~y ~z = shape ~x ~y:(abs y) ~z
-let sym_z ~x ~y ~z = shape ~x ~y ~z:(abs z)
+
+let sym_x ?(pos = const 0.0) () ~x ~y ~z =
+  shape ~x:(abs (x - pos)) ~y ~z
+;;
+
+let sym_y ?(pos = const 0.0) () ~x ~y ~z =
+  shape ~x ~y:(abs (y - pos)) ~z
+;;
+
+let sym_z ?(pos = const 0.0) () ~x ~y ~z =
+  shape ~x ~y ~z:(abs (z - pos))
+;;
+
 let scale_x how_much ~x ~y ~z = shape ~x:(x / how_much) ~y ~z
 let scale_y how_much ~x ~y ~z = shape ~x ~y:(y / how_much) ~z
 let scale_z how_much ~x ~y ~z = shape ~x ~y ~z:(z / how_much)

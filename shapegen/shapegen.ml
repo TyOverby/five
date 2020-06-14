@@ -31,12 +31,12 @@ module Gen = struct
     | Div (a, b) -> div (t_to_shape a) (t_to_shape b)
     | Min (a, b) -> min (t_to_shape a) (t_to_shape b)
     | Max (a, b) -> max (t_to_shape a) (t_to_shape b)
-    | Sin t -> (sin (t_to_shape t)) 
-    | Cos t -> (cos (t_to_shape t)) 
-    | Tan t -> (t_to_shape t)
+    | Sin t -> sin (t_to_shape t)
+    | Cos t -> cos (t_to_shape t)
+    | Tan t -> t_to_shape t
     | Sqrt t -> sqrt (abs (t_to_shape t))
     | Square t -> square (t_to_shape t)
-    | Shell t -> (max (t_to_shape t) (sub(t_to_shape t) (const 1.0)))
+    | Shell t -> max (t_to_shape t) (sub (t_to_shape t) (const 1.0))
   ;;
 
   let rec pred ~f x =
@@ -61,7 +61,8 @@ module Gen = struct
     | Div (a, b)
     | Min (a, b)
     | Max (a, b) -> Int.max (depth a) (depth b)
-    | Shell t | Sin t | Cos t | Tan t | Sqrt t | Square t -> 1 + depth t
+    | Shell t | Sin t | Cos t | Tan t | Sqrt t | Square t ->
+      1 + depth t
   ;;
 
   let rec size = function
@@ -72,7 +73,8 @@ module Gen = struct
     | Div (a, b)
     | Min (a, b)
     | Max (a, b) -> size a + size b
-    | Shell t | Sin t | Cos t | Tan t | Sqrt t | Square t -> 1 + size t
+    | Shell t | Sin t | Cos t | Tan t | Sqrt t | Square t ->
+      1 + size t
   ;;
 
   let is_interesting a =
@@ -99,7 +101,7 @@ module Gen = struct
           | Sin _ | Cos _ | Tan _ -> true
           | _ -> false)
     in
-    var_count && (has_trig)
+    var_count && has_trig
   ;;
 end
 
@@ -123,7 +125,7 @@ let () =
     |> List.filter ~f:(fun a -> Gen.size a > 5)
     |> List.sort ~compare:(fun a b -> Gen.size a - Gen.size b)
   in
-  print_s [%message (List.length l: int)];
+  print_s [%message (List.length l : int)];
   let x = List.nth_exn l 60 in
   print_s (Gen.sexp_of_t x);
   let shape = make_shape (Gen.t_to_shape x) in

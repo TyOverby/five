@@ -71,9 +71,12 @@ let final =
   Five.Space.eval
     (let open Five.Space in
     let* wand = isolated wand in
-    let* box = isolated box in
-    return (Five.Csg.difference box [ wand ]))
+    return wand)
 ;;
+
+(*
+    let* box = isolated box in
+    return (Five.Csg.difference box [ wand ]))*)
 
 let final =
   let expr = Five.Value.Private.to_expr final in
