@@ -6,77 +6,24 @@ open struct
 
   let c = Five.Value.const
 end
-
-let wand =
+let keycap =
   let open Five.Space in
-  let height = 15.0 in
-  let handle = 4.0 in
-  let thick_2 = 0.25 in
-  let* z = z in
-  let rad =
-    interpolate
-      ~using:Five.Interpolate.ease_in_quad
-      ~domain:(handle, height)
-      ~range:(Float.pi *. 2.5, 0.0)
-      z
-  in
-  let scale =
-    interpolate ~domain:(handle, height) ~range:(1.0, 0.35) z
-  in
-  let* () = warp_space (Five.Transform.scale_x scale) in
-  let* () = warp_space (Five.Transform.scale_y scale) in
-  let* () = warp_space (Five.Transform.rotate_z ~rad) in
-  let roundness =
-    interpolate
-      ~using:(fun a -> a * a * a)
-      ~domain:(handle, height)
-      ~range:(0.10, 0.25)
-      z
-  in
-  shape
-    (rounded_box
-       ~r:roundness
-       ~min_x:(c (-.thick_2))
-       ~min_y:(c (-.thick_2))
-       ~min_z:(c 0.0)
-       ~max_x:(c thick_2)
-       ~max_y:(c thick_2)
-       ~max_z:(c height))
+  let* squircle = 
+    shape (Five.Shapes.squircle_box ~size:(c 5.) ~p:(c 4.0)) in  
+  let+ round_rect = 
+    let* () = warp_space (Five.Transform.move ~dx:(c 5.0) ~dy:(c 5.0) ~dz:(c 5.0) ()) in
+    shape (Five.Shapes.rounded_box ~r:(c 2.0) ~min_x:(c (-5.0)) ~min_y:(c (-5.0)) ~max_x:(c 5.0) ~max_y:(c 5.0) ~min_z:(c (-5.0)) ~max_z:(c 5.0) ) in 
+  Five.Csg.smooth_union ~amount:(c 1.) 
+  squircle round_rect
 ;;
 
-let box =
-  let open Five.Space in
-  let height = 15.0 in
-  let* y = y in
-  let roundness =
-    interpolate
-      ~using:(fun a -> a)
-      ~domain:(-0.3, 0.0)
-      ~range:(0.0, 0.1)
-      y
-  in
-  let f = y / c 2.0 in
-  shape
-    (rounded_box
-       ~r:roundness
-       ~min_x:(c (-0.5) + f)
-       ~min_y:(c (-0.3))
-       ~min_z:(c (-1.0) + f)
-       ~max_x:(c 0.5 - f)
-       ~max_y:(c 0.0)
-       ~max_z:(c (height +. 1.0) - f))
-;;
 
 let final =
   Five.Space.eval
     (let open Five.Space in
-    let* wand = isolated wand in
+    let* wand = isolated keycap in
     return wand)
 ;;
-
-(*
-    let* box = isolated box in
-    return (Five.Csg.difference box [ wand ]))*)
 
 let final =
   let expr = Five.Value.Private.to_expr final in
@@ -89,12 +36,12 @@ let () =
     ~tree:final
     ~region:
       (Five_sys.Region3.create
-         ~min_x:(-2.0)
-         ~max_x:2.0
-         ~min_y:(-2.0)
-         ~max_y:2.0
-         ~min_z:(-2.0)
-         ~max_z:17.0)
-    ~resolution:55.0
+         ~min_x:(-15.0)
+         ~max_x:15.0
+         ~min_y:(-15.0)
+         ~max_y:15.0
+         ~min_z:(-15.0)
+         ~max_z:15.0)
+    ~resolution:15.5
     ~filename:"out.stl"
 ;;

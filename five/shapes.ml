@@ -59,4 +59,22 @@ let rounded_box ~r ~min_x ~min_y ~min_z ~max_x ~max_y ~max_z ~x ~y ~z =
   rounded_box ~r ~width ~height ~depth ~x ~y ~z
 ;;
 
+let elongate ?(dx = const 0.) ?(dy = const 0.) ?(dz = const 0.) shape ~x ~y ~z = 
+  let q_x = abs x - dx in 
+  let q_y = abs y - dy in 
+  let q_z = abs z - dz in 
+  let f = min (max q_x (max q_y q_z)) (const 0.0) in
+  shape ~x:(max (const 0.0) q_x) ~y:(max (const 0.0) q_y) ~z:(max (const 0.0) q_z) + f
+
+
+let squircle_box ~p ~size ~x ~y ~z = 
+  (*let nth_root a b = pow a (recip b) in *)
+  (nth_root
+    ((pow (abs x) p) + (pow (abs y) p) + (pow (abs z) p)) 
+    p)
+  - size
+
+let squircle_box ~p ~size = 
+  elongate ~dx:(const 5.0) ~dy:(const 1.0) ~dz:(const 1.0) (squircle_box ~p ~size)
+
 let slice shape ~at ~x ~y ~z:_ = shape ~x ~y ~z:at

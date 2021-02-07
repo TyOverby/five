@@ -1,8 +1,29 @@
 (executable
+ (name wand)
+ (modules wand)
+ (libraries five_sys five))
+
+(executable
+ (name keycap)
+ (modules keycap)
+ (libraries five_sys five))
+
+(executable
  (name five_bin)
+ (modules five_bin)
  (libraries five_sys five))
 
 (rule
  (targets out.stl)
  (action
   (run "./five_bin.exe")))
+
+(rule
+ (targets wand.stl)
+ (action
+  (run "./wand.exe")))
+
+(rule
+ (targets keycap.stl)
+ (action
+  (run "./keycap.exe")))

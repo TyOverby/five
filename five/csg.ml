@@ -26,6 +26,11 @@ let offset shape ~by = shape - by
 let clearance a b ~by = difference a [ offset b ~by ]
 let shell shape ~thickness = clearance shape shape ~by:thickness
 
+let smooth_union d1 d2 ~amount:k =
+  let h = max (const 0.0) (k - abs (d1 - d2)) in
+  min d1 d2 - (h * h * const 0.25 / k)
+;;
+
 let blend_expt a b ~amount =
   let m = amount in
   neg (log (exp (neg m * a) + exp (neg m * b))) / m

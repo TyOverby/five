@@ -46,6 +46,8 @@ val rounded_box
   -> max_z:v
   -> t
 
+val squircle_box : p:v -> size:v -> t
+
 (** Converts a 2d shape to a 3d shape by extruding it along the z
     direction *)
 val extrude_z : t -> min_z:v -> max_z:v -> t

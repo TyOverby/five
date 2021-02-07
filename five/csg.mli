@@ -13,3 +13,5 @@ val blend_rough : v -> v -> amount:v -> v
 val real_offset : v -> by:v -> v
 val morph : v -> v -> by:v -> v
 val blend_difference : ?offset:v -> v -> v -> amount:v -> v
+
+val smooth_union: v -> v -> amount:v -> v

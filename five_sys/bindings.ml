@@ -13,7 +13,7 @@ let () =
   | _ -> ()
 ;;
 
-(*Dl.dlopen ~filename:"libfive.so" ~flags:[]*)
+let () = ignore (Dl.dlopen ~filename:"libfive.so" ~flags:[Dl.RTLD_NOW] : _)
 
 module Interval = struct
   type s
@@ -132,8 +132,9 @@ module Tree = struct
       (int @-> ptr t @-> ptr t @-> returning (ptr t))
   ;;
 
-  let opcode =
-    Foreign.foreign "libfive_opcode_enum" (string @-> returning int)
+  let opcode name =
+    let name = String.map (function | '_' -> '-' | other -> other) name in
+     (Foreign.foreign "libfive_opcode_enum" (string @-> returning int)) name
   ;;
 
   let opcode name =
